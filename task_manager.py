@@ -46,13 +46,25 @@ class TaskManager:
             return "No tasks yet."
         return "\n".join(str(task) for task in self.tasks)
 
-    def complete_task(self, task_id):
-        """Mark the task with this id as completed. Returns True/False."""
+    def get_task_by_id(self, task_id):
+        """Return the task with this id, or None if there is no such task."""
         for task in self.tasks:
             if task.id == task_id:
-                task.completed = True
-                return True
-        return False
+                return task
+        return None
+
+    def complete_task(self, task_id):
+        """Mark the task with this id as completed.
+
+        Returns True only when a pending task is newly completed.
+        Returns False when the id does not exist, or the task
+        is already completed (feature/completetask).
+        """
+        task = self.get_task_by_id(task_id)
+        if task is None or task.completed:
+            return False
+        task.completed = True
+        return True
 
     def delete_task(self, task_id):
         """Delete the task with this id.
