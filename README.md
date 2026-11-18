@@ -1,5 +1,7 @@
 # Student Task Manager
 
+Project status: Planning
+
 A small Python console application to add, display, complete, and delete tasks.
 
 Built for CSC418 DevOps for Cloud Computing — Lab Assignment 4.
