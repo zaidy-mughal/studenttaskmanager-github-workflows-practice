@@ -1,6 +1,6 @@
 # Student Task Manager
 
-Project status: Planning
+Project status: Completed
 
 A small Python console application to add, display, complete, and delete tasks.
 
