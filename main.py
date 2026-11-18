@@ -24,7 +24,11 @@ def main():
 
         if choice == "1":
             title = input("Enter task title: ")
-            task = manager.add_task(title)
+            try:
+                task = manager.add_task(title)
+            except ValueError:
+                print("Error: Task title cannot be empty.")
+                continue
             print(f"Task added: {task}")
 
         elif choice == "2":
