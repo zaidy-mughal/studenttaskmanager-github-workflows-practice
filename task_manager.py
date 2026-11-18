@@ -30,8 +30,13 @@ class TaskManager:
         self._next_id = 1
 
     def add_task(self, title):
-        """Add a task and return it."""
-        task = Task(self._next_id, title)
+        """Add a task and return it.
+
+        Rejects empty or whitespace-only titles (feature/addtask).
+        """
+        if title is None or not str(title).strip():
+            raise ValueError("Task title cannot be empty.")
+        task = Task(self._next_id, str(title).strip())
         self._next_id += 1
         self.tasks.append(task)
         return task
@@ -46,17 +51,36 @@ class TaskManager:
             return "No tasks yet."
         return "\n".join(str(task) for task in self.tasks)
 
-    def complete_task(self, task_id):
-        """Mark the task with this id as completed. Returns True/False."""
+    def get_task_by_id(self, task_id):
+        """Return the task with this id, or None if there is no such task."""
         for task in self.tasks:
             if task.id == task_id:
-                task.completed = True
-                return True
-        return False
+                return task
+        return None
+
+    def complete_task(self, task_id):
+        """Mark the task with this id as completed.
+
+        Returns True only when a pending task is newly completed.
+        Returns False when the id does not exist, or the task
+        is already completed (feature/completetask).
+        """
+        task = self.get_task_by_id(task_id)
+        if task is None or task.completed:
+            return False
+        task.completed = True
+        return True
 
     def delete_task(self, task_id):
-        """Delete the task with this id. Returns True/False."""
-        for task in self.tasks:
+        """Delete the task with this id.
+
+        Only a valid, existing task id is deleted
+        (feature/deletetask). Returns True when a task was
+        deleted, and False when the id does not exist.
+        """
+        if not isinstance(task_id, int) or isinstance(task_id, bool):
+            return False
+        for task in list(self.tasks):
             if task.id == task_id:
                 self.tasks.remove(task)
                 return True
