@@ -1,4 +1,3 @@
-# Student Task Manager - v1.0 Part A - 2026-11-18
 """Console menu for the Student Task Manager.
 
 Run:  python3 main.py
