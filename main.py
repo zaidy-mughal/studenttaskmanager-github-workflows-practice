@@ -43,6 +43,8 @@ def main():
                 print("Task not found.")
 
         elif choice == "4":
+            print("\nYour tasks:")
+            print(manager.display_tasks())
             try:
                 task_id = int(input("Enter task ID to delete: "))
             except ValueError:
@@ -51,7 +53,7 @@ def main():
             if manager.delete_task(task_id):
                 print("Task deleted.")
             else:
-                print("Task not found.")
+                print("Task not found. Please enter a valid task ID.")
 
         elif choice == "5":
             print("Goodbye!")
