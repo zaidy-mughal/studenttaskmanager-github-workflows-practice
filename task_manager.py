@@ -55,8 +55,15 @@ class TaskManager:
         return False
 
     def delete_task(self, task_id):
-        """Delete the task with this id. Returns True/False."""
-        for task in self.tasks:
+        """Delete the task with this id.
+
+        Only a valid, existing task id is deleted
+        (feature/deletetask). Returns True when a task was
+        deleted, and False when the id does not exist.
+        """
+        if not isinstance(task_id, int) or isinstance(task_id, bool):
+            return False
+        for task in list(self.tasks):
             if task.id == task_id:
                 self.tasks.remove(task)
                 return True
