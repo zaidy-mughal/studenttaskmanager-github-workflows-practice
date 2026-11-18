@@ -32,15 +32,20 @@ def main():
             print(manager.display_tasks())
 
         elif choice == "3":
+            print("\nYour tasks:")
+            print(manager.display_tasks())
             try:
                 task_id = int(input("Enter task ID to complete: "))
             except ValueError:
                 print("Please enter a valid number.")
                 continue
-            if manager.complete_task(task_id):
+            task = manager.get_task_by_id(task_id)
+            if task is None:
+                print("Task not found. Please enter a valid task ID.")
+            elif task.completed:
+                print("Task is already completed.")
+            elif manager.complete_task(task_id):
                 print("Task marked as completed.")
-            else:
-                print("Task not found.")
 
         elif choice == "4":
             try:
